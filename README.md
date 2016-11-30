@@ -27,6 +27,7 @@ Let's see how to put it in action next!
 # Action
 - Clone this repository  
 - Run ./run.sh (the first time it will take a couple of minutes since it needs to build the Jenkins Docker image)  
+- The source code repositories can be explored at [http://localhost:3000/explore/repos](http://localhost:3000/explore/repos)
 - Browse to Jenkins at [http://localhost:8080](http://localhost:8080)
 - Run the seed job (the first time it will take a few seconds because it downloads libs and runs tests before effectively updating the jobs)  
 ![alt text](https://github.com/andreschaffer/one-click-microservice/blob/master/docs/images/run_seed_job.png "Run the seed job")  
