@@ -1,0 +1,8 @@
+job-dsl:1.53
+delivery-pipeline-plugin:0.10.0
+envinject:1.93.1
+git:3.0.1
+gogs-webhook:1.0.6
+ws-cleanup:0.32
+credentials:2.1.10
+credentials-binding:1.10

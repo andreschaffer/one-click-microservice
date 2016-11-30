@@ -1,0 +1,22 @@
+version: '2'
+services:
+  jenkins:
+    build:
+      context: jenkins
+      args:
+        DOCKER_VERSION: ${DOCKER_VERSION}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/jenkins_home/:/var/jenkins_home/
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+    environment:
+      - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+  gogs:
+    image: gogs/gogs:0.9.97
+    volumes:
+      - /tmp/gogs/:/data/
+    ports:
+      - "2222:22"
+      - "3000:3000"
