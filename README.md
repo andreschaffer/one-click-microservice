@@ -30,7 +30,7 @@ Let's see how to put it in action next!
 # Action
 - Clone this repository  
 - Run ./run.sh (the first time it will take a couple of minutes since it needs to build the Jenkins Docker image)  
-- Browse to Jenkins at http://localhost:8080
+- Browse to Jenkins at [http://localhost:8080](http://localhost:8080)
 - Run the seed job (the first time it will take a few seconds because it downloads libs and runs tests before effectively updating the jobs)  
 ![alt text](https://github.com/andreschaffer/one-click-microservice/blob/master/docs/images/run_seed_job.png "Run the seed job")  
 
@@ -44,7 +44,7 @@ Let's see how to put it in action next!
 - Voila! You have a brand new pipeline for your microservice. Trigger it to get your microservice up and running  
 ![alt text](https://github.com/andreschaffer/one-click-microservice/blob/master/docs/images/run_microservice_pipeline.png "Run the microservice pipeline")  
 
-- After the deployment is done, you can check your microservice echo Hello, World! (i.e. http://localhost:8000)   
+- After the deployment is done, you can check your microservice echo Hello, World! (i.e. [http://localhost:8000](http://localhost:8000))   
 ![alt text](https://github.com/andreschaffer/one-click-microservice/blob/master/docs/images/microservice_deployment_finished.png "Microservice deployment finished")
 
 - Enjoy and maybe create some more microservices :)
