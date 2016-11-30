@@ -1,8 +1,5 @@
 # One Click Microservice
 
-# Synopsis
-This project aims to provide a starting point for automating the creation of microservices with a single click.
-
 # Background
 Having a way of rapidly creating and deploying microservices is a prerequisite if you want to do serious microservices. It should be easy, so that we can focus on business, the thing that makes us unique. Talking about unique, we hope you enjoyed the quite unique movie [Inception](https://en.wikipedia.org/wiki/Inception), as we'll see some inception techniques going through this solution :)
 
@@ -60,7 +57,8 @@ Now that you have a solution for easily creating microservices, one thing will h
 Adapt the pieces (i.e. git server, microservice_code_generator, deployment) to suit your needs and make your own inception dream! Remember to carry your [totem](http://inception.wikia.com/wiki/Totem) with you and have fun! :)
 
 # How to contribute
-This project follows the following contribution guidelines: https://guides.github.com/activities/contributing-to-open-source/#contributing
+This project follows the following contribution guidelines:  
+https://guides.github.com/activities/contributing-to-open-source/#contributing
 
 # Who do I talk to?
-* Ping @andreschaffer or @tommysdk
+* Ping [André Schaffer](https://github.com/andreschaffer) or [Tommy Tynjä](https://github.com/tommysdk)
