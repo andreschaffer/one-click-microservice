@@ -9,6 +9,7 @@ RUN curl -sSL https://get.docker.com/ | sh && \
     python-pip
 RUN pip install virtualenv
 RUN usermod -aG docker jenkins
+RUN usermod -aG staff jenkins
 
 USER jenkins
 COPY plugins.txt /usr/share/jenkins/plugins.txt
