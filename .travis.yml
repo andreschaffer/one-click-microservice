@@ -1,0 +1,11 @@
+sudo: required
+services:
+  - docker
+
+language: groovy
+jdk:
+  - oraclejdk8
+script: groovy test.groovy
+cache:
+  directories:
+  - $HOME/.groovy/grapes
