@@ -6,16 +6,15 @@ import groovy.transform.Field
 @Grab(group = 'org.codehaus.groovy.modules.http-builder', module = 'http-builder', version = '0.7.1')
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
+import java.lang.ProcessBuilder
 
-
-jenkins = 'http://localhost:8080'
-gogs = 'http://localhost:3000'
-@Field def defaultTimeout = new Duration(2, TimeUnit.MINUTES)
-@Field def defaultPollInterval = new Duration(250, TimeUnit.MILLISECONDS)
+String jenkins = 'http://localhost:8080'
+String gogs = 'http://localhost:3000'
+@Field Duration defaultTimeout = new Duration(2, TimeUnit.MINUTES)
+@Field Duration defaultPollInterval = new Duration(3, TimeUnit.SECONDS)
 @Field ConditionFactory condition = new ConditionFactory(defaultTimeout, defaultPollInterval, defaultPollInterval, true)
 
-
-'./run.sh'.execute()
+shell('./run.sh')
 assert isEventuallyAvailable(jenkins)
 assert isEventuallyAvailable(gogs)
 
@@ -23,8 +22,8 @@ post("$jenkins/job/_seed/build?delay=0sec")
 assert isEventuallyAvailable("$jenkins/job/_seed/lastBuild/api/json")
 assert isEventuallySuccessful("$jenkins/job/_seed/lastBuild/api/json")
 
-def serviceName = 'good_service'
-def servicePort = 8000
+String serviceName = 'good_service'
+String servicePort = '8000'
 post("$jenkins/job/create_microservice_repo/buildWithParameters?SERVICE_NAME=$serviceName&SERVICE_PORT=$servicePort")
 assert isEventuallyAvailable("$jenkins/job/create_microservice_pipeline/1/api/json")
 assert isEventuallySuccessful("$jenkins/job/create_microservice_pipeline/1/api/json")
@@ -37,6 +36,10 @@ assert isEventuallySuccessful("$jenkins/job/${serviceName}_deploy/1/api/json")
 assert isEventuallyAvailable("http://localhost:$servicePort")
 println('Test run finished successfully')
 
+def void shell(cmd) {
+  def process = new ProcessBuilder("$cmd").redirectErrorStream(true).start()
+  process.inputStream.eachLine { println it }
+}
 
 def boolean isEventuallyAvailable(url) {
     condition.await('Waiting for successful http response').until { isAvailable(url) }
