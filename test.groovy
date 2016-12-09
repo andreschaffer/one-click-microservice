@@ -19,23 +19,22 @@ gogs = 'http://localhost:3000'
 assert isEventuallyAvailable(jenkins)
 assert isEventuallyAvailable(gogs)
 
-get('http://localhost:8080/job/_seed/build?delay=0sec')
-assert isEventuallyAvailable('http://localhost:8080/job/_seed/lastBuild/api/json')
-assert isEventuallySuccessful('http://localhost:8080/job/_seed/lastBuild/api/json/')
+post("$jenkins/job/_seed/build?delay=0sec")
+assert isEventuallyAvailable("$jenkins/job/_seed/lastBuild/api/json")
+assert isEventuallySuccessful("$jenkins/job/_seed/lastBuild/api/json")
 
-def serviceName = 'my-microservice'
-def servicePort = 9779
-post("http://localhost:8080/job/create_microservice_repo/buildWithParameters?SERVICE_NAME=$serviceName&SERVICE_PORT=$servicePort")
-assert isEventuallyAvailable('http://localhost:8080/job/create_microservice_pipeline/1/api/json')
-assert isEventuallySuccessful('http://localhost:8080/job/create_microservice_pipeline/1/api/json')
-assert isEventuallySuccessful('http://localhost:8080/job/_seed/2/api/json/')
-assert isEventuallyAvailable('http://localhost:8080/job/' + serviceName + '_build')
+def serviceName = 'good_service'
+def servicePort = 8000
+post("$jenkins/job/create_microservice_repo/buildWithParameters?SERVICE_NAME=$serviceName&SERVICE_PORT=$servicePort")
+assert isEventuallyAvailable("$jenkins/job/create_microservice_pipeline/1/api/json")
+assert isEventuallySuccessful("$jenkins/job/create_microservice_pipeline/1/api/json")
+assert isEventuallySuccessful("$jenkins/job/_seed/2/api/json/")
+assert isEventuallyAvailable("$jenkins/job/${serviceName}_build")
 
-post('http://localhost:8080/job/' + serviceName + '_build/build?delay=0sec')
-assert isEventuallySuccessful('http://localhost:8080/job/' + serviceName + '_deploy/1/api/json')
+post("$jenkins/job/${serviceName}_build/build?delay=0sec")
+assert isEventuallySuccessful("$jenkins/job/${serviceName}_deploy/1/api/json")
 
-assert isAvailable("http://localhost:$servicePort")
-
+assert isEventuallyAvailable("http://localhost:$servicePort")
 println('Test run finished successfully')
 
 
