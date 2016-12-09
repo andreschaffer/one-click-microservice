@@ -7,80 +7,86 @@ import groovy.transform.Field
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 
-
-jenkins = 'http://localhost:8080'
-gogs = 'http://localhost:3000'
-@Field def defaultTimeout = new Duration(2, TimeUnit.MINUTES)
-@Field def defaultPollInterval = new Duration(250, TimeUnit.MILLISECONDS)
+String jenkins = 'http://localhost:8080'
+String gogs = 'http://localhost:3000'
+@Field Duration defaultTimeout = new Duration(2, TimeUnit.MINUTES)
+@Field Duration defaultPollInterval = new Duration(3, TimeUnit.SECONDS)
 @Field ConditionFactory condition = new ConditionFactory(defaultTimeout, defaultPollInterval, defaultPollInterval, true)
 
+String serviceName = 'good_service'
+String servicePort = '8000'
+try {
+  shell('./run.sh')
+  assert isEventuallyAvailable(jenkins)
+  assert isEventuallyAvailable(gogs)
 
-'./run.sh'.execute()
-assert isEventuallyAvailable(jenkins)
-assert isEventuallyAvailable(gogs)
+  post("$jenkins/job/_seed/build?delay=0sec")
+  assert isEventuallyAvailable("$jenkins/job/_seed/lastBuild/api/json")
+  assert isEventuallySuccessful("$jenkins/job/_seed/lastBuild/api/json")
 
-post("$jenkins/job/_seed/build?delay=0sec")
-assert isEventuallyAvailable("$jenkins/job/_seed/lastBuild/api/json")
-assert isEventuallySuccessful("$jenkins/job/_seed/lastBuild/api/json")
+  post("$jenkins/job/create_microservice_repo/buildWithParameters?SERVICE_NAME=$serviceName&SERVICE_PORT=$servicePort")
+  assert isEventuallyAvailable("$jenkins/job/create_microservice_pipeline/1/api/json")
+  assert isEventuallySuccessful("$jenkins/job/create_microservice_pipeline/1/api/json")
+  assert isEventuallySuccessful("$jenkins/job/_seed/2/api/json/")
+  assert isEventuallyAvailable("$jenkins/job/${serviceName}_build")
 
-def serviceName = 'good_service'
-def servicePort = 8000
-post("$jenkins/job/create_microservice_repo/buildWithParameters?SERVICE_NAME=$serviceName&SERVICE_PORT=$servicePort")
-assert isEventuallyAvailable("$jenkins/job/create_microservice_pipeline/1/api/json")
-assert isEventuallySuccessful("$jenkins/job/create_microservice_pipeline/1/api/json")
-assert isEventuallySuccessful("$jenkins/job/_seed/2/api/json/")
-assert isEventuallyAvailable("$jenkins/job/${serviceName}_build")
+  post("$jenkins/job/${serviceName}_build/build?delay=0sec")
+  assert isEventuallySuccessful("$jenkins/job/${serviceName}_deploy/1/api/json")
 
-post("$jenkins/job/${serviceName}_build/build?delay=0sec")
-assert isEventuallySuccessful("$jenkins/job/${serviceName}_deploy/1/api/json")
+  assert isEventuallyAvailable("http://localhost:$servicePort")
+  println('Test run finished successfully')
+} finally {
+  shell('docker-compose down')
+  shell("docker rm -f $serviceName")
+}
 
-assert isEventuallyAvailable("http://localhost:$servicePort")
-println('Test run finished successfully')
-
+def void shell(cmd) {
+  cmd.execute().waitForProcessOutput(System.out, System.err)
+}
 
 def boolean isEventuallyAvailable(url) {
-    condition.await('Waiting for successful http response').until { isAvailable(url) }
-    true
+  condition.await('Waiting for successful http response').until { isAvailable(url) }
+  true
 }
 
 def boolean isEventuallySuccessful(url) {
-    condition.await('Waiting for successful build').until { get(url).equals('SUCCESS') }
-    true
+  condition.await('Waiting for successful build').until { get(url).equals('SUCCESS') }
+  true
 }
 
 def boolean isAvailable(url) {
-    HTTPBuilder http = new HTTPBuilder(url)
-    try {
-        def status = 0
-        http.request(Method.GET) {
-            response.success = { response, reader ->
-                status = response.statusLine.statusCode
-            }
-        }
-        println("URL $url is available! GET returned $status")
-        status == 200
-    } catch (Exception e) {
-        println("URL $url not available")
-        false
+  HTTPBuilder http = new HTTPBuilder(url)
+  try {
+    def status = 0
+    http.request(Method.GET) {
+      response.success = { response, reader ->
+        status = response.statusLine.statusCode
+      }
     }
+    println("URL $url is available! GET returned $status")
+    status == 200
+  } catch (Exception e) {
+    println("URL $url not available")
+    false
+  }
 }
 
 def String get(url) {
-    def buildResult = null
-    HTTPBuilder http = new HTTPBuilder(url)
-    http.request(Method.GET) {
-        response.success = { response, reader ->
-            if (reader != null) {
-                buildResult = reader.result
-            }
-        }
-        response.'404' = { response, reader ->
-            buildResult = 'N/A'
-        }
+  def buildResult = null
+  HTTPBuilder http = new HTTPBuilder(url)
+  http.request(Method.GET) {
+    response.success = { response, reader ->
+      if (reader != null) {
+        buildResult = reader.result
+      }
     }
-    buildResult
+    response.'404' = { response, reader ->
+      buildResult = 'N/A'
+    }
+  }
+  buildResult
 }
 
 def void post(url) {
-    new HTTPBuilder(url).request(Method.POST) {}
+  new HTTPBuilder(url).request(Method.POST) {}
 }

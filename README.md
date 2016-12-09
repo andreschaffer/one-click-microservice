@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/andreschaffer/one-click-microservice.svg?branch=master)](https://travis-ci.org/andreschaffer/one-click-microservice)
 # One Click Microservice
 
 # Background
