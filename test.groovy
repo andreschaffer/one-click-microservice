@@ -45,48 +45,48 @@ def void shell(cmd) {
 }
 
 def boolean isEventuallyAvailable(url) {
-    condition.await('Waiting for successful http response').until { isAvailable(url) }
-    true
+  condition.await('Waiting for successful http response').until { isAvailable(url) }
+  true
 }
 
 def boolean isEventuallySuccessful(url) {
-    condition.await('Waiting for successful build').until { get(url).equals('SUCCESS') }
-    true
+  condition.await('Waiting for successful build').until { get(url).equals('SUCCESS') }
+  true
 }
 
 def boolean isAvailable(url) {
-    HTTPBuilder http = new HTTPBuilder(url)
-    try {
-        def status = 0
-        http.request(Method.GET) {
-            response.success = { response, reader ->
-                status = response.statusLine.statusCode
-            }
-        }
-        println("URL $url is available! GET returned $status")
-        status == 200
-    } catch (Exception e) {
-        println("URL $url not available")
-        false
+  HTTPBuilder http = new HTTPBuilder(url)
+  try {
+    def status = 0
+    http.request(Method.GET) {
+      response.success = { response, reader ->
+        status = response.statusLine.statusCode
+      }
     }
+    println("URL $url is available! GET returned $status")
+    status == 200
+  } catch (Exception e) {
+    println("URL $url not available")
+    false
+  }
 }
 
 def String get(url) {
-    def buildResult = null
-    HTTPBuilder http = new HTTPBuilder(url)
-    http.request(Method.GET) {
-        response.success = { response, reader ->
-            if (reader != null) {
-                buildResult = reader.result
-            }
-        }
-        response.'404' = { response, reader ->
-            buildResult = 'N/A'
-        }
+  def buildResult = null
+  HTTPBuilder http = new HTTPBuilder(url)
+  http.request(Method.GET) {
+    response.success = { response, reader ->
+      if (reader != null) {
+        buildResult = reader.result
+      }
     }
-    buildResult
+    response.'404' = { response, reader ->
+      buildResult = 'N/A'
+    }
+  }
+  buildResult
 }
 
 def void post(url) {
-    new HTTPBuilder(url).request(Method.POST) {}
+  new HTTPBuilder(url).request(Method.POST) {}
 }
