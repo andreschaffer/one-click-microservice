@@ -2,11 +2,13 @@ FROM jenkins:2.19.4
 
 USER root
 ARG DOCKER_VERSION
-RUN curl -sSL https://get.docker.com/ | sh && \
-    apt-get purge -y docker-engine && \
-    apt-get install -y docker-engine=${DOCKER_VERSION}-0~$( [ "${DOCKER_VERSION}" = $( (echo "${DOCKER_VERSION}"; echo "1.12.4") | sort -V | tail -n 1 ) ] && echo debian-jessie || echo jessie ) \
+RUN curl -sSL https://get.docker.com/ | sh \
+    && apt-get purge -y docker-engine \
+    && apt-get install -y \
+    docker-engine=${DOCKER_VERSION}-0~$( [ "${DOCKER_VERSION}" = $( (echo "${DOCKER_VERSION}"; echo "1.12.4") | sort -V | tail -n 1 ) ] && echo debian-jessie || echo jessie ) \
     make \
-    python-pip
+    python-pip \
+    && rm -rf /var/lib/apt/lists/*
 RUN pip install virtualenv
 RUN usermod -aG docker jenkins
 RUN usermod -aG staff jenkins
