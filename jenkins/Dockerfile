@@ -4,7 +4,7 @@ USER root
 ARG DOCKER_VERSION
 RUN curl -sSL https://get.docker.com/ | sh && \
     apt-get purge -y docker-engine && \
-    apt-get install -y docker-engine=${DOCKER_VERSION}-0~jessie \
+    apt-get install -y docker-engine=${DOCKER_VERSION}-0~$( [ "${DOCKER_VERSION}" = $( (echo "${DOCKER_VERSION}"; echo "1.12.4") | sort -V | tail -n 1 ) ] && echo debian-jessie || echo jessie ) \
     make \
     python-pip
 RUN pip install virtualenv
