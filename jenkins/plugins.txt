@@ -1,5 +1,5 @@
 job-dsl:1.53
-delivery-pipeline-plugin:0.10.1
+delivery-pipeline-plugin:0.10.2
 envinject:1.93.1
 git:3.0.1
 gogs-webhook:1.0.7
