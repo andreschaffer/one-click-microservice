@@ -62,5 +62,8 @@ Adapt the pieces (i.e. git server, microservice_code_generator, deployment) to s
 This project follows the following contribution guidelines:  
 https://guides.github.com/activities/contributing-to-open-source/#contributing
 
+# License
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) and affects all files in this source code repository.
+
 # Who do I talk to?
 * Ping [André Schaffer](https://github.com/andreschaffer) or [Tommy Tynjä](https://github.com/tommysdk)
