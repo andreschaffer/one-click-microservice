@@ -88,10 +88,10 @@ JENKINS_PORT=8080
 JENKINS_HOST_PORT=localhost:${JENKINS_PORT}
 
 curl -f -X POST http://${GOGS_HOST_PORT}/api/v1/repos/${GOGS_USER}/${JENKINS_SEED}/hooks \
-  -d '{"type":"gogs","config":{"url":"http://jenkins:'${JENKINS_PORT}'/gogs-webhook/?job=_seed","content_type":"json"},"active":true}' \
+  -d '{"type":"gogs","config":{"url":"http://jenkins:'${JENKINS_PORT}'/gogs-webhook/?job=_seed","content_type":"json","secret":"dummy"},"active":true}' \
   -H "Content-type: application/json" -u ${GOGS_USER}:${GOGS_PASS}
 curl -f -X POST http://${GOGS_HOST_PORT}/api/v1/repos/${GOGS_USER}/${MICROSERVICE_CODE_GENERATOR}/hooks \
-  -d '{"type":"gogs","config":{"url":"http://jenkins:'${JENKINS_PORT}'/gogs-webhook/?job=microservice_code_generator_build","content_type":"json"},"active":true}' \
+  -d '{"type":"gogs","config":{"url":"http://jenkins:'${JENKINS_PORT}'/gogs-webhook/?job=microservice_code_generator_build","content_type":"json","secret":"dummy"},"active":true}' \
   -H "Content-type: application/json" -u ${GOGS_USER}:${GOGS_PASS}
 
 echo "Creating ${GOGS_USER} secret in jenkins"

@@ -42,7 +42,7 @@ createRepo.with {
 
       NEW_SERVICE_BUILD_JOB_NAME=${new BuildMicroserviceJobName(serviceName:"\${SERVICE_NAME}").value()}
       curl -f -X POST ${gogs.restApi.authenticatedWebhooksUrl("\${SERVICE_NAME}", "\${GOGS_PASS}")} \\
-        -d "{\\"type\\":\\"gogs\\",\\"config\\":{\\"url\\":\\"http://jenkins:8080/gogs-webhook/?job=\${NEW_SERVICE_BUILD_JOB_NAME}\\",\\"content_type\\":\\"json\\"},\\"active\\":true}" \\
+        -d "{\\"type\\":\\"gogs\\",\\"config\\":{\\"url\\":\\"http://jenkins:8080/gogs-webhook/?job=\${NEW_SERVICE_BUILD_JOB_NAME}\\",\\"content_type\\":\\"json\\",\\"secret\\":\\"dummy\\"},\\"active\\":true}" \\
         -H "Content-type: application/json"
       """.stripIndent()
     )
