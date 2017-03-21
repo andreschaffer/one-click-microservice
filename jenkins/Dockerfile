@@ -1,4 +1,4 @@
-FROM jenkins:2.19.4
+FROM jenkins:2.32.3
 
 USER root
 ARG DOCKER_VERSION
