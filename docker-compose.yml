@@ -14,7 +14,7 @@ services:
     environment:
       - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
   gogs:
-    image: gogs/gogs:0.10.18
+    image: gogs/gogs:0.11.4
     volumes:
       - /tmp/gogs/:/data/
     ports:
