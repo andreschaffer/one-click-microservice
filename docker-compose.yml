@@ -1,13 +1,11 @@
-version: '2'
+version: '3.2'
 services:
   jenkins:
     build:
       context: jenkins
-      args:
-        DOCKER_VERSION: ${DOCKER_VERSION}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /tmp/jenkins_home/:/var/jenkins_home/
+      - jenkins_data:/var/jenkins_home/
     ports:
       - "8080:8080"
       - "5000:5000"
@@ -16,7 +14,13 @@ services:
   gogs:
     image: gogs/gogs:0.11.4
     volumes:
-      - /tmp/gogs/:/data/
+      - gogs_data:/data/
     ports:
       - "2222:22"
       - "3000:3000"
+
+volumes:
+  jenkins_data:
+    driver: local
+  gogs_data:
+    driver: local

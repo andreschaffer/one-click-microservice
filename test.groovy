@@ -36,7 +36,7 @@ try {
   assert isEventuallyAvailable("http://localhost:$servicePort")
   println('Test run finished successfully')
 } finally {
-  shell('docker-compose down')
+  shell('docker-compose down --volumes')
   shell("docker rm -f $serviceName")
 }
 
