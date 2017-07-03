@@ -1,10 +1,13 @@
 [![Build Status](https://travis-ci.org/andreschaffer/one-click-microservice.svg?branch=master)](https://travis-ci.org/andreschaffer/one-click-microservice)
 # One Click Microservice
 
-# Background
+## Presentation at JFokus 2017
+[![image alt text](https://img.youtube.com/vi/AlUaXEo2K_M/0.jpg)](https://www.youtube.com/watch?v=AlUaXEo2K_M "Continuous Delivery of Microservices")
+
+## Background
 Having a way of rapidly creating and deploying microservices is a prerequisite if you want to do serious microservices. It should be easy, so that we can focus on business, the thing that makes us unique. Talking about unique, we hope you enjoyed the quite unique movie [Inception](https://en.wikipedia.org/wiki/Inception), as we'll see some inception techniques going through this solution :)
 
-# Pieces involved
+## Pieces involved
 The central pieces of this solution are [Jenkins](https://jenkins.io/), [the Jenkins Job-DSL plugin](https://wiki.jenkins-ci.org/display/JENKINS/Job+DSL+Plugin), [Gogs](https://gogs.io/) and [Docker](https://www.docker.com/).  
 
 We use Docker to run Jenkins and Gogs, and while running Jenkins we provide a way for it to run Docker itself (first inception...) with a Docker-outside-of-Docker approach (we map the host's Docker socket, so that containers started by Jenkins will be siblings).  
@@ -22,10 +25,10 @@ That one was probably not the easiest one to follow, but let's move on because w
 Phew. Now we are done :)  
 Let's see how to put it in action next!
 
-# Prerequisites
+## Prerequisites
 - Make sure you have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) (to be able to clone this repo), [Docker](https://docs.docker.com/engine/installation/) & [Docker Compose](https://docs.docker.com/compose/install/) installed
 
-# Action
+## Action
 - Clone this repository  
 - Run ./run.sh (the first time it will take a couple of minutes since it needs to build the Jenkins Docker image)  
 - Now you got Jenkins and Gogs running (the git repositories on Gogs can be explored at [http://localhost:3000/explore/repos](http://localhost:3000/explore/repos) if you'd like)
@@ -48,22 +51,21 @@ Let's see how to put it in action next!
 
 - Enjoy and maybe create some more microservices :)
 
-# Going forward
+## Going forward
 Now that you have a solution for easily creating microservices, one thing will happen: you WILL create lots of microservices. And in order to be able to maintain them, you'll need the proper mindset. A few tips:  
 - Grow your system with convention in mind (i.e. for builds, deployments, monitoring, etc)  
 - Adopt a test strategy that scales (there is one here that you can follow: https://github.com/andreschaffer/microservices-testing-examples)  
 - Put effort into identifying the right microservices boundaries (strategic [Domain-Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design) can take you a long way)  
 - Design for failure (because shit happens)  
 
-# That's it! We hope you enjoyed it!
+## That's it! We hope you enjoyed it!
 Adapt the pieces (i.e. git server, microservice_code_generator, deployment) to suit your needs and make your own inception dream! Remember to carry your [totem](http://inception.wikia.com/wiki/Totem) with you and have fun! :)
 
-# How to contribute
-This project follows the following contribution guidelines:  
-https://guides.github.com/activities/contributing-to-open-source/#contributing
+# Contributing
+If you would like to help making this project better, see the [CONTRIBUTING.md](CONTRIBUTING.md).  
+
+# Maintainers
+Send any other comments, flowers and suggestions to [André Schaffer](https://github.com/andreschaffer) and [Tommy Tynjä](https://github.com/tommysdk).
 
 # License
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) and affects all files in this source code repository.
-
-# Who do I talk to?
-* Ping [André Schaffer](https://github.com/andreschaffer) or [Tommy Tynjä](https://github.com/tommysdk)
+This project is distributed under the [MIT License](LICENSE).
