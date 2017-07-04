@@ -6,9 +6,3 @@ gogs-webhook:1.0.10
 ws-cleanup:0.33
 credentials:2.1.13
 credentials-binding:1.12
-
-workflow-aggregator:2.5
-pipeline-model-definition:1.1.7
-pipeline-stage-view:2.8
-docker-commons:1.7
-docker-workflow:1.12
