@@ -1,7 +1,7 @@
 deliveryPipelineView('all_pipelines') {
     pipelineInstances(1)
     columns(2)
-    sorting(Sorting.LAST_ACTIVITY)
+    sorting(Sorting.FAILED_FIRST)
     updateInterval(5)
     enableManualTriggers(true)
     showAvatars(false)
