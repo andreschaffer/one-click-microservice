@@ -15,6 +15,6 @@ repositories {
 
 dependencies {
   compile 'org.codehaus.groovy:groovy-all:2.4.7'
-  compile 'org.jenkins-ci.plugins:job-dsl-core:1.50'
+  compile 'org.jenkins-ci.plugins:job-dsl-core:1.63'
   testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
