@@ -67,7 +67,7 @@ Now that you have a solution for easily creating microservices, one thing will h
 - Design for failure (because shit happens)
 
 ## That's it! We hope you enjoyed it!
-There is quite some [Inception](https://en.wikipedia.org/wiki/Inception) here, so just remember to carry your [totem](http://inception.wikia.com/wiki/Totem) with you and have fun! :)
+Note there is quite some [Inception](https://en.wikipedia.org/wiki/Inception) here, so just remember to carry your [totem](http://inception.wikia.com/wiki/Totem) with you and have fun! :)
 
 # Contributing
 If you would like to help making this project better, see the [CONTRIBUTING.md](CONTRIBUTING.md).  
