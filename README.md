@@ -14,7 +14,7 @@ The central pieces of this solution are [Docker](https://www.docker.com/), [Jenk
 
 We use Docker to run Jenkins and Gogs. Jenkins itself has access to Docker in a Docker-outside-of-Docker approach, i.e. we map the host's Docker socket, so that containers started by Jenkins will be siblings.
 
-We have prepared to two repositories into Gogs (our Git server):  
+We have prepared two repositories into Gogs (our Git server):  
 - microservice_code_generator, which is responsible for the generation of the microservices' skeleton.  
 In our case, we are creating a simple Python Flask application as our microservice but you can simply adjust it to your needs (being the code skeleton relevant for your context and with your programming language of choice).
 - jenkins_seed, where we have our pipelines as code via Jenkins Job-DSL definitions.
